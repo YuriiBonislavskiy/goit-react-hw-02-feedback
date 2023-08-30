@@ -10,6 +10,6 @@ export const FeedbackOptions = ({ options, onLeaveFeedback }) =>
       onClick={onLeaveFeedback}
       key={option}
     >
-      {capitalize(option)}
+      {capitalize(option, ' ')}
     </button>
   ));
