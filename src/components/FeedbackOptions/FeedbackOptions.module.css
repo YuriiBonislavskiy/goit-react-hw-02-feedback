@@ -5,4 +5,9 @@
     border-color: rgb(182, 181, 179);
     padding-left: 8px;
     padding-right: 8px;
+
+    &:hover,
+    &:focus {
+        background-color: rgb(55, 211, 231);
+    }
 }
