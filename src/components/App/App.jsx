@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import css from './App.module.css';
 import { FeedbackOptions } from '../FeedbackOptions/FeedbackOptions';
 import { Statistics } from '../Statistics/Statistics';
+import { Section } from '../Section/Section';
+import { Notification } from '../Notification/Notification';
+// import { Section } from 'components/Section/Section';
 
 class App extends Component {
   state = {
@@ -17,6 +20,8 @@ class App extends Component {
     }));
   };
 
+  isVisible = this.good || this.neutral || this.bad ? true : false;
+
   countTotalFeedback = (good, neutral, bad) => {
     return good + neutral + bad;
   };
@@ -26,30 +31,43 @@ class App extends Component {
   };
 
   render() {
+
     const { good, neutral, bad } = this.state;
-    const total = this.countTotalFeedback(good, neutral, bad);
-    const positivePercentage = this.countPositiveFeedbackPercentage(
-      good,
-      total
-    );
     const isVisible = good || neutral || bad ? true : false;
+        const total = this.countTotalFeedback(good, neutral, bad);
+        const positivePercentage = this.countPositiveFeedbackPercentage(
+          good,
+          total
+        );
+
+    const  feedbackOptions = (
+       <FeedbackOptions
+          options={Object.keys(this.state)}
+          onLeaveFeedback={this.onChangeStats}
+        />);
+
+    const statistics = (
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        total={total}
+        positivePercentage={positivePercentage}
+      />
+    );
+
     return (
       <div className={css.container}>
-        <h2>Please leave feedback</h2>
-        <FeedbackOptions
-          options={['good', 'neutral', 'bad']}
-          onLeaveFeedback={this.onChangeStats}
-        />
-        <h2>Statistics</h2>
-        {isVisible && (
-          <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={total}
-            positivePercentage={positivePercentage}
-          />
+        <Section
+          title={'Please leave feedback'}
+          child={feedbackOptions}
+        ></Section>
+        {isVisible ? (
+          <Section title={'Statistics'} child={statistics}></Section>
+        ) : (
+          <Notification massage={'There is no feedback'} />
         )}
+
       </div>
     );
   }

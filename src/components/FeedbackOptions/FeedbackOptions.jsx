@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import css from './FeedbackOptions.module.css';
 import { capitalize } from 'utils';
 
-export const FeedbackOptions = ({ options, onLeaveFeedback }) =>
-  options.map(option => (
+export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
+  return options.map(option => (
     <button
       type="button"
       className={css.feebbackButton}
@@ -12,4 +13,9 @@ export const FeedbackOptions = ({ options, onLeaveFeedback }) =>
     >
       {capitalize(option, ' ')}
     </button>
-  ));
+  ));}
+
+FeedbackOptions.propTypes = {
+  options: PropTypes.array.isRequired,
+  onLeaveFeedback: PropTypes.func.isRequired,
+};
