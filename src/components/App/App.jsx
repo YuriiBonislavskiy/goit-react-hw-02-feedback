@@ -20,8 +20,6 @@ class App extends Component {
     }));
   };
 
-  isVisible = this.good || this.neutral || this.bad ? true : false;
-
   countTotalFeedback = (good, neutral, bad) => {
     return good + neutral + bad;
   };
@@ -33,41 +31,33 @@ class App extends Component {
   render() {
 
     const { good, neutral, bad } = this.state;
-    const isVisible = good || neutral || bad ? true : false;
         const total = this.countTotalFeedback(good, neutral, bad);
         const positivePercentage = this.countPositiveFeedbackPercentage(
           good,
           total
         );
 
-    const  feedbackOptions = (
-       <FeedbackOptions
-          options={Object.keys(this.state)}
-          onLeaveFeedback={this.onChangeStats}
-        />);
-
-    const statistics = (
-      <Statistics
-        good={good}
-        neutral={neutral}
-        bad={bad}
-        total={total}
-        positivePercentage={positivePercentage}
-      />
-    );
-
     return (
       <div className={css.container}>
-        <Section
-          title={'Please leave feedback'}
-          child={feedbackOptions}
-        ></Section>
-        {isVisible ? (
-          <Section title={'Statistics'} child={statistics}></Section>
+        <Section title={'Please leave feedback'}>
+          <FeedbackOptions
+            options={Object.keys(this.state)}
+            onLeaveFeedback={this.onChangeStats}
+          />
+        </Section>
+        {total ? (
+          <Section title={'Statistics'}>
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={total}
+              positivePercentage={positivePercentage}
+            />
+          </Section>
         ) : (
           <Notification massage={'There is no feedback'} />
         )}
-
       </div>
     );
   }
