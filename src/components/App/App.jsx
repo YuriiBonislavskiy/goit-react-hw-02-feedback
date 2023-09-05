@@ -29,13 +29,12 @@ class App extends Component {
   };
 
   render() {
-
     const { good, neutral, bad } = this.state;
-        const total = this.countTotalFeedback(good, neutral, bad);
-        const positivePercentage = this.countPositiveFeedbackPercentage(
-          good,
-          total
-        );
+    const total = this.countTotalFeedback(good, neutral, bad);
+    const positivePercentage = this.countPositiveFeedbackPercentage(
+      good,
+      total
+    );
 
     return (
       <div className={css.container}>
